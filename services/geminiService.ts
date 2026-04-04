@@ -1,13 +1,13 @@
 import { GoogleGenAI, Type, Modality } from "@google/genai";
 import { QuizData, QuizPart } from '../types';
 
-const API_KEY = process.env.API_KEY;
+const API_KEY = process.env.GEMINI_API_KEY || process.env.API_KEY;
 
 if (!API_KEY) {
-  throw new Error("API_KEY environment variable not set");
+  console.warn("API key not found in environment variables. Please add GEMINI_API_KEY or API_KEY to your project settings.");
 }
 
-const ai = new GoogleGenAI({ apiKey: API_KEY });
+const ai = new GoogleGenAI({ apiKey: API_KEY || "" });
 
 export async function generateFullTest(): Promise<QuizData> {
   const model = "gemini-3-flash-preview";
