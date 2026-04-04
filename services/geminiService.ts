@@ -1,10 +1,13 @@
 import { GoogleGenAI, Type, Modality } from "@google/genai";
 import { QuizData, QuizPart } from '../types';
 
-const API_KEY = process.env.GEMINI_API_KEY || process.env.API_KEY;
+const API_KEY = 
+  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) || 
+  process.env.GEMINI_API_KEY || 
+  process.env.API_KEY;
 
 if (!API_KEY) {
-  console.warn("API key not found in environment variables. Please add GEMINI_API_KEY or API_KEY to your project settings.");
+  console.error("Gemini API Key is missing! Please set VITE_GEMINI_API_KEY or GEMINI_API_KEY in your environment variables.");
 }
 
 const ai = new GoogleGenAI({ apiKey: API_KEY || "" });
