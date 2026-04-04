@@ -41,13 +41,27 @@ const QuizScreen: React.FC<QuizScreenProps> = ({ quizData, onSubmit }) => {
   }, [activeQuestionIndex, currentPart.audioUrls]);
 
   const handlePlayAudio = async () => {
+    // If we have pre-defined audio URLs for this part
     if (currentPart.audioUrls && currentPart.audioUrls[activeQuestionIndex]) {
-      setAudioUrl(currentPart.audioUrls[activeQuestionIndex]);
+      const targetUrl = currentPart.audioUrls[activeQuestionIndex];
+      
+      if (audioUrl === targetUrl) {
+        // If already set, just play
+        audioRef.current?.play().catch(err => {
+          console.error("Playback failed:", err);
+        });
+      } else {
+        // If different, set it and let useEffect handle play
+        setAudioUrl(targetUrl);
+      }
       return;
     }
 
+    // Fallback for TTS or if audioUrl is already set from TTS
     if (audioUrl) {
-      audioRef.current?.play();
+      audioRef.current?.play().catch(err => {
+        console.error("Playback failed:", err);
+      });
       return;
     }
 
@@ -202,21 +216,34 @@ const QuizScreen: React.FC<QuizScreenProps> = ({ quizData, onSubmit }) => {
                         <p className="text-gray-600 dark:text-gray-400 mb-6">{t('listeningInstructions')}</p>
                         
                         {audioUrl && (
-                          <audio 
-                            ref={audioRef} 
-                            src={audioUrl} 
-                            controls 
-                            className="w-full mb-4" 
-                            referrerPolicy="no-referrer"
-                            onPlay={() => console.log("Audio started playing")}
-                            onError={(e) => {
-                              console.error("Audio error:", e);
-                              // If it's a Google Drive link and it fails, it might be a session issue
-                              if (audioUrl.includes('drive.google.com') || audioUrl.includes('docs.google.com')) {
-                                console.warn("Google Drive audio failed to load. This might be due to browser restrictions or file permissions.");
-                              }
-                            }}
-                          />
+                          <div className="mb-4">
+                            <audio 
+                              ref={audioRef} 
+                              src={audioUrl} 
+                              controls 
+                              className="w-full" 
+                              referrerPolicy="no-referrer"
+                              onPlay={() => {
+                                console.log("Audio started playing");
+                                setIsAudioLoading(false);
+                              }}
+                              onLoadStart={() => setIsAudioLoading(true)}
+                              onCanPlay={() => setIsAudioLoading(false)}
+                              onError={(e) => {
+                                console.error("Audio error:", e);
+                                setIsAudioLoading(false);
+                                if (audioUrl.includes('drive.google.com') || audioUrl.includes('docs.google.com')) {
+                                  console.warn("Google Drive audio failed to load. This might be due to browser restrictions or file permissions.");
+                                }
+                              }}
+                            />
+                            {isAudioLoading && (
+                              <div className="text-xs text-blue-500 mt-1 flex items-center gap-2">
+                                <span className="animate-spin h-3 w-3 border-2 border-blue-500 border-t-transparent rounded-full"></span>
+                                {t('loadingAudio')}...
+                              </div>
+                            )}
+                          </div>
                         )}
                         
                         <button
