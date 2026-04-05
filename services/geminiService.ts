@@ -91,7 +91,8 @@ export async function generateFullTest(): Promise<QuizData> {
          - **Questions**: Generate 5 questions for each talk (Total 15). **CRITICAL**: Questions MUST follow the chronological order of the transcript.
     
     **CRITICAL GUIDELINES**:
-    - **LISTENING ACCURACY**: All listening questions MUST be strictly derived from the information provided in the scripts. Do not include outside information.
+    - **LISTENING ACCURACY**: All listening questions AND their options (A, B, C, D) MUST be strictly derived from the information provided in the scripts. 
+    - **NO OUTSIDE KNOWLEDGE**: Do NOT use common distractors or answers from other Cambridge exams (e.g., "loud music", "dirty toilets") if they are not explicitly mentioned in the provided transcript.
     - **PARAPHRASING**: Correct answers in reading parts MUST use synonyms. Do not repeat text exactly.
     - **DISTRACTORS**: Incorrect options should use keywords from the text to test comprehension.
     - **RANDOMIZATION**: Ensure correct answers are evenly distributed (A, B, C, D).
