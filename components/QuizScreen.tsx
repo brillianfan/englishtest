@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import Markdown from 'react-markdown';
 import { QuizPart } from '../types';
 import Timer from './Timer';
 import ConfirmationModal from './ConfirmationModal';
@@ -225,7 +226,6 @@ const QuizScreen: React.FC<QuizScreenProps> = ({ quizData, onSubmit }) => {
                               src={audioUrl} 
                               controls 
                               className="w-full" 
-                              referrerPolicy="no-referrer"
                               onPlay={() => {
                                 console.log("Audio started playing");
                                 setIsAudioLoading(false);
@@ -259,7 +259,9 @@ const QuizScreen: React.FC<QuizScreenProps> = ({ quizData, onSubmit }) => {
                       </div>
                     </div>
                   ) : (
-                    <p className="whitespace-pre-wrap font-serif text-lg leading-loose">{currentPart.passage}</p>
+                    <div className="markdown-body font-serif text-lg leading-loose">
+                      <Markdown>{currentPart.passage}</Markdown>
+                    </div>
                   )}
                 </div>
               </div>

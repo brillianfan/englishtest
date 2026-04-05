@@ -91,9 +91,12 @@ export async function generateFullTest(): Promise<QuizData> {
          - **Questions**: Generate 5 questions for each talk (Total 15). **CRITICAL**: Questions MUST follow the chronological order of the transcript.
     
     **CRITICAL GUIDELINES**:
+    - **LISTENING ACCURACY**: All listening questions MUST be strictly derived from the information provided in the scripts. Do not include outside information.
     - **PARAPHRASING**: Correct answers in reading parts MUST use synonyms. Do not repeat text exactly.
     - **DISTRACTORS**: Incorrect options should use keywords from the text to test comprehension.
     - **RANDOMIZATION**: Ensure correct answers are evenly distributed (A, B, C, D).
+    - **VOCABULARY HIGHLIGHTING**: For Reading vocabulary questions, the target word MUST be **bolded** (using **word**) within the passage.
+    - **PASSAGE FORMATTING**: Use double newlines (\n\n) between paragraphs in all passages to ensure a blank line for readability.
     
     Output strict JSON.
   `;

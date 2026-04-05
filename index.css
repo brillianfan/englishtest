@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+@layer base {
+  .markdown-body p {
+    margin-bottom: 1.5rem;
+  }
+  .markdown-body p:last-child {
+    margin-bottom: 0;
+  }
+  .markdown-body strong {
+    font-weight: 700;
+    color: inherit;
+  }
+}
