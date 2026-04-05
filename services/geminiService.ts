@@ -2,7 +2,7 @@ import { GoogleGenAI, Type, Modality } from "@google/genai";
 import { QuizData, QuizPart } from '../types';
 
 const API_KEY = 
-  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) || 
+  (typeof import.meta !== 'undefined' && (import.meta as any).env && (import.meta as any).env.VITE_GEMINI_API_KEY) || 
   process.env.GEMINI_API_KEY || 
   process.env.API_KEY;
 
@@ -77,7 +77,7 @@ export async function generateFullTest(): Promise<QuizData> {
               Audio URL: /audio/Part 2 (3).mp3 (Use for questions 9-12)
          - **Structure**: Combine these 3 scripts into the passage field.
          - **Audio URLs**: Provide an array of 12 URLs (repeat the corresponding URL for each question).
-         - **Questions**: Generate 4 questions for each conversation (Total 12).
+         - **Questions**: Generate 4 questions for each conversation (Total 12). **CRITICAL**: Questions MUST follow the chronological order of the transcript.
        - **Part 3 (15 questions)**:
          - **FIXED SCRIPTS & AUDIO**: You MUST use these 3 talks for Part 3.
            1. (Types of plays): "Speaker 1: If a play makes you laugh, it's a comedy... An example is Saint Joan by George Bernard Shaw."
@@ -88,7 +88,7 @@ export async function generateFullTest(): Promise<QuizData> {
               Audio URL: /audio/Part 3 (3).mp3 (Use for questions 11-15)
          - **Structure**: Combine these 3 scripts into the passage field.
          - **Audio URLs**: Provide an array of 15 URLs (repeat the corresponding URL for each question).
-         - **Questions**: Generate 5 questions for each talk (Total 15).
+         - **Questions**: Generate 5 questions for each talk (Total 15). **CRITICAL**: Questions MUST follow the chronological order of the transcript.
     
     **CRITICAL GUIDELINES**:
     - **PARAPHRASING**: Correct answers in reading parts MUST use synonyms. Do not repeat text exactly.

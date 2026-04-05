@@ -35,10 +35,13 @@ const QuizScreen: React.FC<QuizScreenProps> = ({ quizData, onSubmit }) => {
   };
 
   useEffect(() => {
-    if (currentPart.audioUrls) {
-      setAudioUrl(null);
+    if (currentPart.audioUrls && currentPart.audioUrls[activeQuestionIndex]) {
+      const nextAudioUrl = currentPart.audioUrls[activeQuestionIndex];
+      if (audioUrl !== nextAudioUrl) {
+        setAudioUrl(nextAudioUrl);
+      }
     }
-  }, [activeQuestionIndex, currentPart.audioUrls]);
+  }, [activeQuestionIndex, currentPart.audioUrls, audioUrl]);
 
   const handlePlayAudio = async () => {
     // If we have pre-defined audio URLs for this part
