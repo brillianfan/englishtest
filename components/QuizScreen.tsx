@@ -222,6 +222,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({ quizData, onSubmit }) => {
                         {audioUrl && (
                           <div className="mb-4">
                             <audio 
+                              key={audioUrl}
                               ref={audioRef} 
                               src={audioUrl} 
                               controls 
